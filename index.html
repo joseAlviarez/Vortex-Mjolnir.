@@ -13,7 +13,8 @@ header{display:flex;align-items:center;justify-content:space-between;gap:12px;pa
 .brand{display:flex;align-items:center;gap:12px}.logo{width:38px;height:38px;border:1px solid #28748a;border-radius:11px;display:grid;place-items:center;color:var(--cyan);font-weight:900;font-size:20px;background:#0d2a3c}.brand strong{display:block;letter-spacing:2px;font-size:15px}.brand small{color:var(--muted);letter-spacing:1.5px;font-size:10px}
 .status{color:#8ce5c1;font-size:11px;white-space:nowrap}.status:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#55dfa7;margin-right:7px;box-shadow:0 0 10px #55dfa7}
 main{max-width:1500px;margin:auto;padding:16px;display:grid;grid-template-columns:minmax(0,1.65fr) minmax(310px,.85fr);gap:14px}
-.panel{background:linear-gradient(145deg,#102238f2,#0a1726f5);border:1px solid var(--line);border-radius:15px;overflow:hidden;box-shadow:0 12px 35px #0003}.map-panel{min-height:600px;display:flex;flex-direction:column}.map-head{padding:13px 15px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line)}h2{font-size:13px;letter-spacing:1.2px;margin:0}.map-actions{display:flex;flex-wrap:wrap;gap:6px}.btn{border:1px solid #2b4964;background:#10283e;color:#cfe5f5;border-radius:8px;padding:7px 10px;font-size:11px;cursor:pointer}.btn:hover,.btn.active{border-color:var(--cyan);color:#fff;background:#12405a}.btn:disabled{opacity:.5;cursor:wait}#map{height:100%;min-height:540px;flex:1;background:#0a1827}
+.panel{background:linear-gradient(145deg,#102238f2,#0a1726f5);border:1px solid var(--line);border-radius:15px;overflow:hidden;box-shadow:0 12px 35px #0003}
+.map-panel{min-height:600px;display:flex;flex-direction:column}.map-head{padding:13px 15px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid var(--line)}h2{font-size:13px;letter-spacing:1.2px;margin:0}.map-actions{display:flex;flex-wrap:wrap;gap:6px}.btn{border:1px solid #2b4964;background:#10283e;color:#cfe5f5;border-radius:8px;padding:7px 10px;font-size:11px;cursor:pointer}.btn:hover,.btn.active{border-color:var(--cyan);color:#fff;background:#12405a}.btn:disabled{opacity:.5;cursor:wait}#map{height:100%;min-height:540px;flex:1;background:#0a1827}
 .side{display:flex;flex-direction:column;gap:14px}.pad{padding:15px}.location-row{display:flex;gap:8px;margin-top:12px}.location-row input{min-width:0;flex:1;background:#081625;border:1px solid #29445d;border-radius:8px;color:var(--text);padding:10px}.location-row button{background:#12617a;border:0;border-radius:8px;color:white;padding:0 13px;cursor:pointer}.current{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:17px}.temp{font-size:52px;line-height:1;font-weight:650;letter-spacing:-3px}.weather-icon{font-size:42px}.condition{color:var(--muted);margin-top:6px}.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:18px}.metric{background:#0a1929;border:1px solid #1b344a;border-radius:10px;padding:10px}.metric span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.8px}.metric b{display:block;font-size:17px;margin-top:4px}.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}.section-title small{color:var(--muted);font-size:10px}.hourly{display:flex;gap:9px;overflow-x:auto;padding-bottom:4px}.hour{min-width:62px;text-align:center;background:#0a1929;border:1px solid #1b344a;border-radius:9px;padding:9px 5px}.hour small{color:var(--muted);font-size:10px}.hour b{display:block;margin:7px 0;font-size:16px}.hour span{font-size:17px}.days{display:grid;gap:8px}.day{display:grid;grid-template-columns:1fr 25px 48px 48px;align-items:center;gap:8px;font-size:12px}.day small{color:var(--muted)}.day .range{display:flex;justify-content:space-between;gap:8px}.quake-list{display:grid;gap:8px;max-height:190px;overflow:auto}.quake{display:flex;justify-content:space-between;gap:8px;padding:8px 9px;background:#0a1929;border-radius:8px;font-size:11px}.quake b{color:var(--amber)}footer{max-width:1500px;margin:0 auto;padding:0 18px 22px;color:#718ba2;font-size:10px}
 .leaflet-control-attribution{font-size:9px!important}.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#102238;color:#e8f2fc}.leaflet-popup-content{font-size:12px}
 @media(max-width:900px){main{grid-template-columns:1fr;padding:10px}.map-panel{min-height:420px}#map{min-height:420px}.side{display:grid;grid-template-columns:1fr 1fr}.weather-card{grid-column:1/-1}}
@@ -27,9 +28,16 @@ main{max-width:1500px;margin:auto;padding:16px;display:grid;grid-template-column
 </header>
 <main>
  <section class="panel map-panel">
-  <div class="map-head"><h2>MAPA METEOROLÓGICO EN DIRECTO</h2><div class="map-actions">
-   <button class="btn active" data-layer="base">MAPA</button><button class="btn" data-layer="radar">RADAR</button><button class="btn" data-layer="wind">VIENTO</button><button class="btn" data-layer="temp">TEMPERATURA</button><button class="btn" data-layer="quake">SISMOS</button>
-  </div></div>
+  <div class="map-head">
+    <h2 id="map-title">MAPA METEOROLÓGICO EN DIRECTO</h2>
+    <div class="map-actions">
+     <button class="btn active" data-layer="base">MAPA</button>
+     <button class="btn" data-layer="radar">RADAR</button>
+     <button class="btn" data-layer="wind">VIENTO</button>
+     <button class="btn" data-layer="temp">TEMPERATURA</button>
+     <button class="btn" data-layer="quake">SISMOS</button>
+    </div>
+  </div>
   <div id="map"></div>
  </section>
  <aside class="side">
@@ -55,6 +63,10 @@ main{max-width:1500px;margin:auto;padding:16px;display:grid;grid-template-column
 const $=id=>document.getElementById(id);
 const state={lat:37.135,lon:-8.537,name:"Portimão, Portugal"};
 const map=L.map("map",{zoomControl:true}).setView([state.lat,state.lon],6);
+
+// CORRECCIÓN 1: Forzar redimensionamiento inicial para evitar tiles grises en Flexbox
+setTimeout(() => map.invalidateSize(), 250);
+
 const base=L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',maxZoom:19}).addTo(map);
 let radarLayer=null,quakeLayer=L.layerGroup().addTo(map),weatherMarkers=L.layerGroup(),active="base",quakeData=[];
 const marker=L.marker([state.lat,state.lon]).addTo(map).bindPopup("Portimão").openPopup();
@@ -65,7 +77,7 @@ function fmtHour(s){return new Date(s).toLocaleTimeString("es-ES",{hour:"2-digit
 async function loadWeather(lat=state.lat,lon=state.lon,name=state.name){
  state.lat=lat;state.lon=lon;state.name=name;
  $("place").textContent=name;marker.setLatLng([lat,lon]).bindPopup(name);
- const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,pressure_msl,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,precipitation_probability,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&forecast_days=7&timezone=auto`;
+ const url=https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,pressure_msl,wind_speed_10m,wind_direction_10m&hourly=temperature_2m,precipitation_probability,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&forecast_days=7&timezone=auto;
  try{
   const r=await fetch(url);if(!r.ok)throw Error("HTTP "+r.status);const d=await r.json(),c=d.current;
   const wi=weatherInfo(c.weather_code);
@@ -74,12 +86,12 @@ async function loadWeather(lat=state.lat,lon=state.lon,name=state.name){
   $("updated").textContent="Actualizado "+fmtHour(c.time);$("hourly").innerHTML="";
   const start=d.hourly.time.findIndex(t=>t>=c.time);
   for(let i=Math.max(0,start);i<Math.min(d.hourly.time.length,start+24);i++){
-   const h=document.createElement("div");h.className="hour";h.innerHTML=`<small>${i===start?"Ahora":fmtHour(d.hourly.time[i])}</small><span>${weatherInfo(d.hourly.weather_code[i])[1]}</span><b>${Math.round(d.hourly.temperature_2m[i])}°</b><small>${d.hourly.precipitation_probability[i]??0}% lluvia</small>`;$("hourly").append(h)
+   const h=document.createElement("div");h.className="hour";h.innerHTML=<small>${i===start?"Ahora":fmtHour(d.hourly.time[i])}</small><span>${weatherInfo(d.hourly.weather_code[i])[1]}</span><b>${Math.round(d.hourly.temperature_2m[i])}°</b><small>${d.hourly.precipitation_probability[i]??0}% lluvia</small>;$("hourly").append(h)
   }
   $("days").innerHTML="";
   for(let i=0;i<d.daily.time.length;i++){
    const day=document.createElement("div");day.className="day";const label=i===0?"Hoy":new Date(d.daily.time[i]+"T12:00:00").toLocaleDateString("es-ES",{weekday:"short"});
-   day.innerHTML=`<span>${label}</span><span>${weatherInfo(d.daily.weather_code[i])[1]}</span><span class="range"><b>${Math.round(d.daily.temperature_2m_min[i])}°</b><small>${Math.round(d.daily.temperature_2m_max[i])}°</small></span><small>${d.daily.precipitation_probability_max[i]??0}%</small>`;$("days").append(day)
+   day.innerHTML=<span>${label}</span><span>${weatherInfo(d.daily.weather_code[i])[1]}</span><span class="range"><b>${Math.round(d.daily.temperature_2m_min[i])}°</b><small>${Math.round(d.daily.temperature_2m_max[i])}°</small></span><small>${d.daily.precipitation_probability_max[i]??0}%</small>;$("days").append(day)
   }
   setConnection("DATOS METEOROLÓGICOS ACTIVOS")
  }catch(e){$("condition").textContent="No se pudieron cargar los datos";setConnection("ERROR DE CONEXIÓN");console.error(e)}
@@ -100,8 +112,8 @@ async function loadQuakes(){
  quakeLayer.clearLayers();$("quakes").innerHTML="";
  quakeData.sort((a,b)=>b.properties.mag-a.properties.mag).slice(0,30).forEach(f=>{
   const [lon,lat,depth]=f.geometry.coordinates,m=f.properties.mag||0;
-  L.circleMarker([lat,lon],{radius:Math.max(4,m*2.2),color:m>=4?"#ff6d75":"#ffbd59",fillColor:m>=4?"#ff6d75":"#ffbd59",fillOpacity:.75,weight:1}).bindPopup(`<b>Magnitud ${m.toFixed(1)}</b><br>${f.properties.place}<br>Profundidad: ${Math.round(depth)} km`).addTo(quakeLayer);
-  const item=document.createElement("div");item.className="quake";item.innerHTML=`<span>${f.properties.place||"Localización desconocida"}</span><b>M ${m.toFixed(1)}</b>`;item.addEventListener("click",()=>map.setView([lat,lon],7));$("quakes").append(item)
+  L.circleMarker([lat,lon],{radius:Math.max(4,m*2.2),color:m>=4?"#ff6d75":"#ffbd59",fillColor:m>=4?"#ff6d75":"#ffbd59",fillOpacity:.75,weight:1}).bindPopup(<b>Magnitud ${m.toFixed(1)}</b><br>${f.properties.place}<br>Profundidad: ${Math.round(depth)} km).addTo(quakeLayer);
+  const item=document.createElement("div");item.className="quake";item.innerHTML=<span>${f.properties.place||"Localización desconocida"}</span><b>M ${m.toFixed(1)}</b>;item.addEventListener("click",()=>map.setView([lat,lon],7));$("quakes").append(item)
  });
  if(!quakeData.length)$("quakes").textContent="No hay sismos recientes en la zona europea."; 
  }catch(e){$("quakes").textContent="No se pudo consultar USGS en este momento."}
@@ -109,17 +121,38 @@ async function loadQuakes(){
 async function loadRadar(){
  try{const r=await fetch("https://api.rainviewer.com/public/weather-maps.json");if(!r.ok)throw Error("RainViewer "+r.status);const d=await r.json();const frames=d.radar?.past||[];if(!frames.length)throw Error("Sin imágenes de radar");
  const frame=frames[frames.length-1];if(radarLayer)map.removeLayer(radarLayer);
- radarLayer=L.tileLayer(`https://tilecache.rainviewer.com${frame.path}/256/{z}/{x}/{y}/2/1_1.png`,{opacity:.62,attribution:'Radar &copy; <a href="https://www.rainviewer.com/">RainViewer</a>',maxZoom:12});
+ radarLayer=L.tileLayer(https://tilecache.rainviewer.com${frame.path}/256/{z}/{x}/{y}/2/1_1.png,{opacity:.62,attribution:'Radar &copy; <a href="https://www.rainviewer.com/">RainViewer</a>',maxZoom:12});
  }catch(e){console.warn("Radar no disponible",e)}
 }
+
+// CORRECCIÓN 2 y 3: Manejo seguro del array de coordenadas múltiple en Open-Meteo + Indicador visual de carga
 function drawWindTemp(kind){
- weatherMarkers.clearLayers();const bounds=map.getBounds(),center=map.getCenter();const pts=[];
- for(let y=0;y<3;y++)for(let x=0;x<3;x++){const lat=bounds.getSouth()+(bounds.getNorth()-bounds.getSouth())*(y+.5)/3,lon=bounds.getWest()+(bounds.getEast()-bounds.getWest())*(x+.5)/3;pts.push([lat,lon])}
+ weatherMarkers.clearLayers();
+ const bounds=map.getBounds();
+ const pts=[];
+ for(let y=0;y<3;y++)for(let x=0;x<3;x++){const lat=bounds.getSouth()+(bounds.getNorth()-bounds.getSouth())(y+.5)/3,lon=bounds.getWest()+(bounds.getEast()-bounds.getWest())(x+.5)/3;pts.push([lat,lon])}
  const lats=pts.map(p=>p[0]).join(","),lons=pts.map(p=>p[1]).join(",");
- fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&current=temperature_2m,wind_speed_10m&timezone=auto`).then(r=>r.json()).then(data=>{
-  const arr=Array.isArray(data)?data:[data];arr.forEach((v,i)=>{if(!v.current)return;const val=kind==="wind"?Math.round(v.current.wind_speed_10m):Math.round(v.current.temperature_2m);const label=kind==="wind"?val+" km/h":val+"°C";L.marker(pts[i],{icon:L.divIcon({className:"",html:`<div style="background:#09283bdc;border:1px solid #35d5e8;color:white;border-radius:8px;padding:5px 7px;font-size:11px;font-weight:700;white-space:nowrap">${kind==="wind"?"↗ ":""}${label}</div>`})}).addTo(weatherMarkers)})
- }).catch(console.warn)
+ 
+ $("map-title").textContent = CARGANDO ${kind === 'wind' ? 'VIENTO' : 'TEMPERATURA'}...;
+
+ fetch(https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&current=temperature_2m,wind_speed_10m&timezone=auto)
+  .then(r=>r.json())
+  .then(data=>{
+   $("map-title").textContent = "MAPA METEOROLÓGICO EN DIRECTO";
+   const arr = Array.isArray(data) ? data : [data];
+   arr.forEach((v,i)=>{
+    if(!v || !v.current)return;
+    const val=kind==="wind"?Math.round(v.current.wind_speed_10m):Math.round(v.current.temperature_2m);
+    const label=kind==="wind"?val+" km/h":val+"°C";
+    L.marker(pts[i],{icon:L.divIcon({className:"",html:<div style="background:#09283bdc;border:1px solid #35d5e8;color:white;border-radius:8px;padding:5px 7px;font-size:11px;font-weight:700;white-space:nowrap">${kind==="wind"?"↗️ ":""}${label}</div>})}).addTo(weatherMarkers)
+   })
+  })
+  .catch(err=>{
+   $("map-title").textContent = "MAPA METEOROLÓGICO EN DIRECTO";
+   console.warn("Error cargando datos de capa", err);
+  });
 }
+
 document.querySelectorAll("[data-layer]").forEach(b=>b.addEventListener("click",async()=>{
  document.querySelectorAll("[data-layer]").forEach(x=>x.classList.remove("active"));b.classList.add("active");const layer=b.dataset.layer;active=layer;
  [radarLayer,weatherMarkers,quakeLayer].forEach(l=>{if(l&&map.hasLayer(l))map.removeLayer(l)});
@@ -128,6 +161,7 @@ document.querySelectorAll("[data-layer]").forEach(b=>b.addEventListener("click",
  if(layer==="quake")quakeLayer.addTo(map);
  if(layer==="base"){}
 }));
+
 map.on("moveend",()=>{if(active==="wind"||active==="temp")drawWindTemp(active)});
 loadWeather();loadQuakes();loadRadar();
 setInterval(()=>loadWeather(),15*60*1000);setInterval(loadQuakes,10*60*1000);
