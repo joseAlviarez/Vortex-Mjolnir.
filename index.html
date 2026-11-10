@@ -271,10 +271,9 @@
     const map = L.map("map").setView([48.5, 12], 4);
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      maxZoom: 18,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+      }).addTo(map);
     // TERREMOTOS REGISTRADOS EN LAS ÚLTIMAS 24 HORAS
     async function loadEarthquakes() {
       const list = document.getElementById("earthquakes");
