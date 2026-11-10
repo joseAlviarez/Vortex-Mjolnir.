@@ -19,11 +19,13 @@
       --text: #f4f8ff;
       --muted: #a9bdd2;
       --border: #24415f;
-    }
+    html, body { height: 100%; margin: 0; 
+            #app { height: 100%; display: block; }
 
     * { box-sizing: border-box; }
 
-    body {
+    body {<div id="app"></div>
+          <div id="map"></div>
       margin: 0;
       background: var(--bg);
       color: var(--text);
